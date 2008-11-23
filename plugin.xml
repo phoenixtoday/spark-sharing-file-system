@@ -4,10 +4,8 @@
     <author>Phoenix</author>
     <homePage>http://phoenixtoday.blogbus.com</homePage>
     <email>phoenixtoday@gmail.com</email>
-    <description>a plugin for Spark to share file</description>
-    <!-- 关键是这里，这里要定义你的Plugin 类 -->
+    <description>a plugin for Spark and Openfireto share file</description>
     <class>edu.spark.plugin.FileSystemPlugin</class>
-    <!-- 这里定义你使用的Spark 最低版本 -->
-    <minSparkVersion>2.5.0</minSparkVersion>
+    <minSparkVersion>2.5.8</minSparkVersion>
     <os>Windows</os>
 </plugin>
