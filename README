@@ -1,0 +1,8 @@
+The aim of this project is to develop a sharing file plug-in
+for Spark and Openfire instant messenger.
+
+This project contains two parts, one is a plug-in for Spark version 2.5.8,
+the other part is a plug-in for Openfire version 3.6.2.
+
+To get both plugin-ins you can try to download source code then
+run the ant script.
