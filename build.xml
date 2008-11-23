@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="IM" default="release" basedir=".">
 
-	<property name="src.dir" value="src" />
-	<property name="dest.dir" value="bin" />
+	<property name="spark.src.dir" value="spark_src" />
+	<property name="spark.dest.dir" value="spark_classes" />
+	<property name="openfire.src.dir" value="openfire_src" />
+	<property name="openfire.dest.dir" value="openfire_classes" />
 	<property name="lib.dir" value="lib" />
-	<property name="jar_name" value="sharing_file_system.jar" />
-	<property name="im.path"
-		value="E:/workspace/europa/spark_new/doc/spark/target/build" />
+	<property name="spark.jar.name" value="sharing_file_system.jar" />
+	<property name="spark.path"
+		value="tmp/spark/target/build" />
 	
-
 	<target name="clean">
-		<delete dir="${dest.dir}" />
+		<delete dir="${spark.dest.dir}" />
+		<delete dir="${openfire.dest.dir}" />
 		<delete file="/lib/${jar_name}" />
 	</target>
 
 	<target name="init" depends="clean">
-		<mkdir dir="${dest.dir}" />
+		<mkdir dir="${spark.dest.dir}" />
+		<mkdir dir="${spark.dest.dir}/edu/spark/plugin/images" />
+		<mkdir dir="${openfire.dest.dir}" />
 		<mkdir dir="${lib.dir}" />
+		<copy todir="${spark.dest.dir}/edu/spark/plugin/images">
+           <fileset dir="${spark.src.dir}/edu/spark/plugin/images">
+              <include name="*.png" />
+              <include name="*.gif" />
+              <include name="*.jpg" />
+          </fileset>
+        </copy>
 	</target>
 	
 	<target name="build" depends="init">
-		<javac srcdir="${src.dir}" destdir="${dest.dir}" debug="on" >
+		<javac srcdir="${spark.src.dir}" destdir="${spark.dest.dir}" debug="on" >
 			<classpath>
 				<pathelement location="lib/spark.jar" />
 				<pathelement location="lib/smack.jar" />
@@ -29,8 +40,8 @@
 	</target>
 
 	<target name="jar" depends="build">
-		<jar jarfile="${lib.dir}/${jar_name}" basedir="${dest.dir}" />
-		<jar jarfile="${jar_name}">
+		<jar jarfile="${lib.dir}/${spark.jar.name}" basedir="${spark.dest.dir}" />
+		<jar jarfile="${spark.jar.name}">
 			<fileset dir=".">
 				<include name="lib/*.jar" />
 				<exclude name="lib/spark.jar" />
@@ -44,9 +55,9 @@
 	</target>
 
 	<target name="release" depends="jar">
-		<copy todir="${im.path}/plugins">
+		<copy todir="${spark.path}/plugins">
            <fileset dir=".">
-              <include name="${jar_name}" />
+              <include name="${spark.jar.name}" />
           </fileset>
        </copy>
 	</target>
