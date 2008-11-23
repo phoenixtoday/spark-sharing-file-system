@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/spark_new"/>
+	<classpathentry kind="lib" path="lib/spark.jar"/>
+	<classpathentry kind="lib" path="lib/smack.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
