@@ -1,11 +1,12 @@
 package edu.spark.plugin.ui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -15,6 +16,7 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import org.jivesoftware.spark.SparkManager;
 
@@ -23,74 +25,91 @@ import edu.spark.plugin.FileSystemPlugin;
 public class FileSystemPanel extends JPanel {
 
 	private static final long serialVersionUID = -7487210399307589176L;
-	
-	public FileSystemPanel()
-	{
+
+	private JDialog fileChooserDialog = new JDialog(SparkManager
+			.getMainWindow());
+
+	private final JTextField uploadTextField = new JTextField();
+
+	private JFileChooser fileChooser = new JFileChooser();
+
+	public FileSystemPanel() {
 		super();
 		initialize();
 	}
 
 	private void initialize() {
+
+		fileChooserDialog.setSize(450, 400);
+
+		fileChooserDialog.setContentPane(fileChooser);
+
+		fileChooserDialog.setLocation(SparkManager.getMainWindow().getX(),
+				SparkManager.getMainWindow().getY());
 		this.setSize(300, 200);
-		this.setLayout(new GridBagLayout());
+		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createLineBorder(Color.gray, 1));
 		this.setBackground(Color.white);
-		this.setAlignmentX(LEFT_ALIGNMENT);
-		
-		FilePanel[] files = {new FilePanel("file_one.txt"), new FilePanel("file_two.txt"), new FilePanel("file_three.txt")};
-		
-		for (int i = 0; i < files.length; i++) 
-			this.add(files[i], getGridBagConstraints(i, 0.0));
-		
+
+		JPanel fileContainer = new JPanel();
+		fileContainer.setLayout(new GridBagLayout());
+		fileContainer.setBackground(Color.white);
+
+		FilePanel[] files = { new FilePanel("the_file_one.txt"),
+				new FilePanel("the_file_two.txt"),
+				new FilePanel("the_file_three.txt") };
+
+		for (int i = 0; i < files.length; i++)
+			fileContainer.add(files[i], getGridBagConstraints(i, 0.0, 0.0, 0));
+		fileContainer.add(new JLabel(" "), getGridBagConstraints(files.length,
+				3, 3, 1));
+
+		this.add(fileContainer, BorderLayout.CENTER);
+
 		JPanel uploadPanel = new JPanel();
-		JButton uploadButton = new JButton("Upload File");
-		uploadButton.addActionListener(new ActionListener(){
+
+		uploadTextField.setColumns(20);
+		final JButton uploadButton = new JButton("Upload File");
+		uploadButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				JDialog dialog = new JDialog(SparkManager.getMainWindow());
-				dialog.setSize(450, 400);
-				
-				dialog.setContentPane(getJContentPane());
-
-				dialog.setLocation(SparkManager.getMainWindow().getX(),
-						SparkManager.getMainWindow().getY());
-				dialog.setVisible(true);
+				if (event.getSource() == uploadButton) {
+					fileChooserDialog.setVisible(true);
+					int returnVal = fileChooser
+							.showOpenDialog(FileSystemPanel.this);
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						File file = fileChooser.getSelectedFile();
+						uploadTextField.setText(file.getName());
+					} else if (returnVal == JFileChooser.CANCEL_OPTION)
+						fileChooserDialog.setVisible(false);
+				}
 			}
-
-			private Container getJContentPane() {
-				JPanel panel = new JPanel();
-				panel.add(new JFileChooser());
-				return panel;
-			}
-			
 		});
+		uploadPanel.add(uploadTextField);
 		uploadPanel.add(uploadButton);
 		uploadPanel.setBackground(Color.white);
 		uploadPanel.setAlignmentX(LEFT_ALIGNMENT);
-		
-		this.add(uploadPanel, getGridBagConstraints(files.length, 1.0));
-		
-		
+
+		this.add(uploadPanel, BorderLayout.SOUTH);
+
 	}
-	
-	private GridBagConstraints getGridBagConstraints(int rowNum, double yWeight)
-	{
+
+	private GridBagConstraints getGridBagConstraints(int rowNum,
+			double xWeight, double yWeight, int columnNum) {
 		GridBagConstraints gridBagConstraints = new GridBagConstraints();
 		gridBagConstraints.fill = GridBagConstraints.BOTH;
-		gridBagConstraints.gridx = 0;
+		gridBagConstraints.gridx = columnNum;
 		gridBagConstraints.gridy = rowNum;
-		gridBagConstraints.weightx = 1.0;
+		gridBagConstraints.weightx = xWeight;
 		gridBagConstraints.weighty = yWeight;
 		return gridBagConstraints;
 	}
-	
-	private class FilePanel extends JPanel
-	{
+
+	private class FilePanel extends JPanel {
 		private static final long serialVersionUID = -8932261460593637196L;
-		
-		public FilePanel(String name)
-		{
+
+		public FilePanel(String name) {
 			super();
 			this.setLayout(new GridBagLayout());
 			this.setBackground(Color.white);
@@ -98,9 +117,8 @@ public class FileSystemPanel extends JPanel {
 			add(new JLabel(name));
 			this.setAlignmentX(LEFT_ALIGNMENT);
 		}
-		
-		private Icon getIcon(String filePath)
-		{
+
+		private Icon getIcon(String filePath) {
 			return new ImageIcon(FileSystemPlugin.class.getResource(filePath));
 		}
 	}
