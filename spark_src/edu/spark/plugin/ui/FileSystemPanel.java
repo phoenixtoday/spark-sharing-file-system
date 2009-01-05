@@ -113,7 +113,7 @@ public class FileSystemPanel extends JPanel {
 			super();
 			this.setLayout(new GridBagLayout());
 			this.setBackground(Color.white);
-			add(new JLabel(getIcon("images/things.png")));
+			add(new JLabel(getIcon("images/file_share.png")));
 			add(new JLabel(name));
 			this.setAlignmentX(LEFT_ALIGNMENT);
 		}
