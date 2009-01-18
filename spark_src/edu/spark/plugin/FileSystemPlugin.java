@@ -35,10 +35,6 @@ public class FileSystemPlugin implements Plugin
 		System.out.println("DEBUG - try to get serve JID :" + conn.getServiceName());
 		System.out.println("DEBUG - try to get user JID :" + SparkManager.getUserManager().getValidJID("phoenix"));
 		ProviderManager providerManager = ProviderManager.getInstance();
-
-		providerManager.addIQProvider("groups", "com:im:group",
-				new GroupTreeIQProvider());
-		System.out.println("×¢²áGroupTree IQ Ìá¹©Õß");
 	}
 	
 	public void shutdown()
