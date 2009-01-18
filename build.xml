@@ -35,6 +35,7 @@
 			<classpath>
 				<pathelement location="lib/spark.jar" />
 				<pathelement location="lib/smack.jar" />
+				<pathelement location="lib/smackx.jar" />
 			</classpath>
 		</javac>
 	</target>

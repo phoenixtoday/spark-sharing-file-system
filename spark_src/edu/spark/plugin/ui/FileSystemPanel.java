@@ -18,6 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smackx.filetransfer.FileTransferManager;
+import org.jivesoftware.smackx.filetransfer.OutgoingFileTransfer;
 import org.jivesoftware.spark.SparkManager;
 
 import edu.spark.plugin.FileSystemPlugin;
@@ -81,6 +84,13 @@ public class FileSystemPanel extends JPanel {
 					if (returnVal == JFileChooser.APPROVE_OPTION) {
 						File file = fileChooser.getSelectedFile();
 						uploadTextField.setText(file.getName());
+						FileTransferManager transferManager = new FileTransferManager(SparkManager.getConnection());
+						OutgoingFileTransfer transfer = transferManager.createOutgoingFileTransfer("aaa");
+	                    try {
+							transfer.sendFile(file, "Sending");
+						} catch (XMPPException e) {
+							e.printStackTrace();
+						}
 					} else if (returnVal == JFileChooser.CANCEL_OPTION)
 						fileChooserDialog.setVisible(false);
 				}
