@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+    <!-- Main plugin class -->
+    <class>edu.openfire.plugin.FileSystemPlugin</class>
+
+    <!-- Plugin meta-data -->
+    <name>File Sharing System</name>
+    <description>This is a plugin for openfire to share file</description>
+    <author>Phoenix</author>
+
+    <version>1.0</version>
+    <date>19/01/2009</date>
+    <url>http://localhost:9001/openfire/plugins.jsp</url>
+    <minServerVersion>3.4.1</minServerVersion>
+    <licenseType>apache</licenseType>
+
+    <!-- Admin console entries -->
+    <adminconsole>
+        <!-- More on this below -->
+    </adminconsole>
+</plugin>

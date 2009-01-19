@@ -7,13 +7,17 @@
 	<property name="openfire.dest.dir" value="openfire_classes" />
 	<property name="lib.dir" value="lib" />
 	<property name="spark.jar.name" value="sharing_file_system.jar" />
+	<property name="openfire.jar.name" value="sharing_file_system_server.jar" />
 	<property name="spark.path"
 		value="tmp/spark/target/build" />
+	<property name="openfire.path"
+		value="tmp/openfire/target/openfire" />
 	
 	<target name="clean">
 		<delete dir="${spark.dest.dir}" />
 		<delete dir="${openfire.dest.dir}" />
-		<delete file="/lib/${jar_name}" />
+		<delete file="/lib/${spark.jar.name}" />
+		<delete file="/lib/${openfire.jar.name}" />
 	</target>
 
 	<target name="init" depends="clean">
@@ -38,6 +42,11 @@
 				<pathelement location="lib/smackx.jar" />
 			</classpath>
 		</javac>
+		<javac srcdir="${openfire.src.dir}" destdir="${openfire.dest.dir}" debug="on" >
+			<classpath>
+				<pathelement location="lib/openfire.jar" />
+			</classpath>
+		</javac>
 	</target>
 
 	<target name="jar" depends="build">
@@ -46,19 +55,40 @@
 			<fileset dir=".">
 				<include name="lib/*.jar" />
 				<exclude name="lib/spark.jar" />
+				<exclude name="lib/openfire.jar" />
 				<exclude name="lib/smack.jar" />
+				<exclude name="lib/smackx.jar" />
+				<exclude name="lib/${openfire.jar.name}" />
 			</fileset>
-			<fileset dir=".">
+			<fileset dir="spark_src">
 				<include name="plugin.xml" />
 			</fileset>
 		</jar>
-
+		<jar jarfile="${lib.dir}/${openfire.jar.name}" basedir="${openfire.dest.dir}" />
+		<jar jarfile="${openfire.jar.name}">
+			<fileset dir=".">
+				<include name="lib/*.jar" />
+				<exclude name="lib/spark.jar" />
+				<exclude name="lib/openfire.jar" />
+				<exclude name="lib/smack.jar" />
+				<exclude name="lib/smackx.jar" />
+				<exclude name="lib/${spark.jar.name}" />
+			</fileset>
+			<fileset dir="openfire_src">
+				<include name="plugin.xml" />
+			</fileset>
+		</jar>
 	</target>
 
 	<target name="release" depends="jar">
 		<copy todir="${spark.path}/plugins">
            <fileset dir=".">
               <include name="${spark.jar.name}" />
+          </fileset>
+       </copy>
+		<copy todir="${openfire.path}/plugins">
+           <fileset dir=".">
+              <include name="${openfire.jar.name}" />
           </fileset>
        </copy>
 	</target>
