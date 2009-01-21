@@ -14,6 +14,7 @@ import org.jivesoftware.spark.SparkManager;
 import org.jivesoftware.spark.component.tabbedPane.SparkTabbedPane;
 import org.jivesoftware.spark.plugin.Plugin;
 
+import edu.spark.plugin.file.FileSenderIQProvider;
 import edu.spark.plugin.ui.FileSystemPanel;
 
 public class FileSystemPlugin implements Plugin
@@ -29,12 +30,13 @@ public class FileSystemPlugin implements Plugin
 		addFileSystemTab();
 		
 		XMPPConnection conn = SparkManager.getConnection();
-//		 JID Formate : login_name@server_name/spark
-		System.out.println("DEBUG - try to get serve JID :" + conn.getUser());
-		System.out.println("DEBUG - try to get serve JID :" + conn.getHost());
-		System.out.println("DEBUG - try to get serve JID :" + conn.getServiceName());
-		System.out.println("DEBUG - try to get user JID :" + SparkManager.getUserManager().getValidJID("phoenix"));
 		ProviderManager providerManager = ProviderManager.getInstance();
+		providerManager.addIQProvider("yrui", "edu:im:file", new FileSenderIQProvider());
+		System.out.println("INFO - Registrer file sender iq provider");
+		
+//		 JID Formate : login_name@server_name/spark
+		System.out.println("DEBUG - try to get server ip :" + conn.getServiceName());
+
 	}
 	
 	public void shutdown()

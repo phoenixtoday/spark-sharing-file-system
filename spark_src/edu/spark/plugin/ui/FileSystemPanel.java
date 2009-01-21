@@ -84,14 +84,8 @@ public class FileSystemPanel extends JPanel {
 					if (returnVal == JFileChooser.APPROVE_OPTION) {
 						File file = fileChooser.getSelectedFile();
 						uploadTextField.setText(file.getName());
-						FileTransferManager transferManager = new FileTransferManager(SparkManager.getConnection());
-//						need to create the server xmpp address first
-						OutgoingFileTransfer transfer = transferManager.createOutgoingFileTransfer("server@" + SparkManager.getConnection().getServiceName() + "/spark");
-	                    try {
-							transfer.sendFile(file, "Sending");
-						} catch (XMPPException e) {
-							e.printStackTrace();
-						}
+//						TODO send transfer file IQ
+//						after receive the approved IQ get socket port send file to server
 					} else if (returnVal == JFileChooser.CANCEL_OPTION)
 						fileChooserDialog.setVisible(false);
 				}
