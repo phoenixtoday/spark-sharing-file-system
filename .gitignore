@@ -1,7 +1,9 @@
 spark_classes/**/*
 openfire_classes/**/*
 tmp/**/*
+bin/**/*
 lib/sharing_file_system.jar
 lib/sharing_file_system_server.jar
-bin/**/*
+
+
 

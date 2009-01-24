@@ -7,5 +7,5 @@
     <description>a plugin for Spark and Openfireto share file</description>
     <class>edu.spark.plugin.FileSystemPlugin</class>
     <minSparkVersion>2.5.8</minSparkVersion>
-    <os>Windows</os>
+    <os>Windows,mac</os>
 </plugin>

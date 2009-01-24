@@ -74,8 +74,6 @@ public class FileSystemPanel extends JPanel {
 		uploadTextField.setColumns(20);
 		final JButton uploadButton = new JButton("Upload File");
 		uploadButton.addActionListener(new ActionListener() {
-
-			@Override
 			public void actionPerformed(ActionEvent event) {
 				if (event.getSource() == uploadButton) {
 					fileChooserDialog.setVisible(true);
