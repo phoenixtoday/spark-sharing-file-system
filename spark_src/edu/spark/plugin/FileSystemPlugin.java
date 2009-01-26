@@ -15,6 +15,8 @@ import org.jivesoftware.spark.component.tabbedPane.SparkTabbedPane;
 import org.jivesoftware.spark.plugin.Plugin;
 
 import edu.spark.plugin.file.FileSenderIQProvider;
+import edu.spark.plugin.file.ServerSocketIQ;
+import edu.spark.plugin.file.ServerSocketIQProvider;
 import edu.spark.plugin.ui.FileSystemPanel;
 
 public class FileSystemPlugin implements Plugin
@@ -31,10 +33,21 @@ public class FileSystemPlugin implements Plugin
 		
 		XMPPConnection conn = SparkManager.getConnection();
 		ProviderManager providerManager = ProviderManager.getInstance();
-		providerManager.addIQProvider("yrui", "edu:im:file", new FileSenderIQProvider());
+		
+		providerManager.addIQProvider("file", "http://jabber.org/protocol/file-sharing", new FileSenderIQProvider());
 		System.out.println("INFO - Registrer file sender iq provider");
 		
-//		 JID Formate : login_name@server_name/spark
+		providerManager.addIQProvider("socket", "http://jabber.org/protocol/file-sharing/socket", new ServerSocketIQProvider());
+		System.out.println("INFO - Registrer server socket iq provider");
+		
+		
+		ServerSocketIQ request = new ServerSocketIQ();
+		request.setType(IQ.Type.GET);
+
+		sendReqGetResp(request);
+
+		
+//		JID Formate : login_name@server_name/spark
 		System.out.println("DEBUG - try to get server ip :" + conn.getServiceName());
 
 	}
@@ -64,7 +77,7 @@ public class FileSystemPlugin implements Plugin
 	}
 	
 	/**
-	 * 发送IQ 请求，并获得最终返回的响应IQ
+	 * 
 	 * 
 	 * @param req
 	 * @return
@@ -77,7 +90,7 @@ public class FileSystemPlugin implements Plugin
 		PacketCollector collector = conn
 				.createPacketCollector(new PacketIDFilter(req.getPacketID()));
 		conn.sendPacket(req);
-		System.out.println("发送IQ :\n" + req.toXML());
+		System.out.println("send request :\n" + req.toXML());
 
 		IQ response = (IQ) collector.nextResult(SmackConfiguration
 				.getPacketReplyTimeout());

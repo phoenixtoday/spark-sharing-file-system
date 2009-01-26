@@ -4,9 +4,11 @@ import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.provider.IQProvider;
 import org.xmlpull.v1.XmlPullParser;
 
-public class FileSenderIQProvider implements IQProvider {
+public class ServerSocketIQProvider implements IQProvider{
 
-	public IQ parseIQ(XmlPullParser parser) throws Exception {
+	private static final String DOCUMENT_ELEMENT_NAME = "socket";
+	
+	public IQ parseIQ(XmlPullParser parser) throws Exception{
 		return null;
 	}
 
