@@ -15,20 +15,20 @@ import org.jivesoftware.spark.component.tabbedPane.SparkTabbedPane;
 import org.jivesoftware.spark.plugin.Plugin;
 
 import edu.spark.plugin.file.FileSenderIQProvider;
-import edu.spark.plugin.file.ServerSockectInfo;
+import edu.spark.plugin.file.FileSender;
 import edu.spark.plugin.file.ServerSocketIQ;
 import edu.spark.plugin.file.ServerSocketIQProvider;
 import edu.spark.plugin.ui.FileSystemPanel;
 
 public class FileSystemPlugin implements Plugin
 {
-	private static ServerSockectInfo serverInfo;
+	private static FileSender serverInfo;
 	
-	public static ServerSockectInfo getServerInfo() {
+	public static FileSender getServerInfo() {
 		return serverInfo;
 	}
 
-	public static void setServerInfo(ServerSockectInfo serverInfo) {
+	public static void setServerInfo(FileSender serverInfo) {
 		FileSystemPlugin.serverInfo = serverInfo;
 	}
 
@@ -49,7 +49,6 @@ public class FileSystemPlugin implements Plugin
 		
 		providerManager.addIQProvider("socket", "http://jabber.org/protocol/file-sharing/socket", new ServerSocketIQProvider());
 		System.out.println("INFO - Registrer server socket iq provider");
-		
 		
 		ServerSocketIQ request = new ServerSocketIQ();
 		request.setType(IQ.Type.GET);

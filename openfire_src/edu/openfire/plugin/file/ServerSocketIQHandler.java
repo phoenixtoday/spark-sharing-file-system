@@ -40,7 +40,7 @@ public class ServerSocketIQHandler extends IQHandler {
 			reply.setError(PacketError.Condition.bad_request);
 			return reply;
 		}
-		
+
 		socketElement.addElement("port").addEntity("socket", "" + port);
 		reply.setChildElement(socketElement.createCopy());
 

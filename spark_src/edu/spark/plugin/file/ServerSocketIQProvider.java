@@ -20,9 +20,9 @@ public class ServerSocketIQProvider implements IQProvider {
 				if (parser.getName().equals("port")) {
 					port = Integer.parseInt(parser.nextText());
 					FileSystemPlugin
-							.setServerInfo(new ServerSockectInfo(SparkManager
+							.setServerInfo(new FileSender(SparkManager
 									.getConnection().getHost(), port));
-					ServerSockectInfo info = FileSystemPlugin.getServerInfo();
+					FileSender info = FileSystemPlugin.getServerInfo();
 					System.out.println("Server Socket info: server - "
 							+ info.getAddress() + " port - " + info.getPort());
 				}

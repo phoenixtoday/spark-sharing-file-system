@@ -18,12 +18,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smackx.filetransfer.FileTransferManager;
-import org.jivesoftware.smackx.filetransfer.OutgoingFileTransfer;
 import org.jivesoftware.spark.SparkManager;
 
 import edu.spark.plugin.FileSystemPlugin;
+import edu.spark.plugin.file.FileSender;
 
 public class FileSystemPanel extends JPanel {
 
@@ -82,8 +80,9 @@ public class FileSystemPanel extends JPanel {
 					if (returnVal == JFileChooser.APPROVE_OPTION) {
 						File file = fileChooser.getSelectedFile();
 						uploadTextField.setText(file.getName());
-//						TODO send transfer file IQ
-//						after receive the approved IQ get socket port send file to server
+						
+						FileSender.getInstance().sendFile(file);
+						
 					} else if (returnVal == JFileChooser.CANCEL_OPTION)
 						fileChooserDialog.setVisible(false);
 				}
