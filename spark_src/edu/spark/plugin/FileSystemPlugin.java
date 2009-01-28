@@ -15,12 +15,22 @@ import org.jivesoftware.spark.component.tabbedPane.SparkTabbedPane;
 import org.jivesoftware.spark.plugin.Plugin;
 
 import edu.spark.plugin.file.FileSenderIQProvider;
+import edu.spark.plugin.file.ServerSockectInfo;
 import edu.spark.plugin.file.ServerSocketIQ;
 import edu.spark.plugin.file.ServerSocketIQProvider;
 import edu.spark.plugin.ui.FileSystemPanel;
 
 public class FileSystemPlugin implements Plugin
 {
+	private static ServerSockectInfo serverInfo;
+	
+	public static ServerSockectInfo getServerInfo() {
+		return serverInfo;
+	}
+
+	public static void setServerInfo(ServerSockectInfo serverInfo) {
+		FileSystemPlugin.serverInfo = serverInfo;
+	}
 
 	public boolean canShutDown()
 	{
@@ -45,7 +55,6 @@ public class FileSystemPlugin implements Plugin
 		request.setType(IQ.Type.GET);
 
 		sendReqGetResp(request);
-
 		
 //		JID Formate : login_name@server_name/spark
 		System.out.println("DEBUG - try to get server ip :" + conn.getServiceName());
@@ -58,22 +67,6 @@ public class FileSystemPlugin implements Plugin
 
 	public void uninstall()
 	{
-	}
-	
-	private void addFileSystemTab()
-	{
-		SparkTabbedPane pane = SparkManager.getWorkspace().getWorkspacePane();
-		System.out.println("INFO : Initialize File System Plugin UI");
-		pane.addTab("File System", new ImageIcon(getClass().getResource(
-				"images/sharing_file_system.png")), fileSystemPane());
-	}
-	
-	private JScrollPane fileSystemPane()
-	{
-		JScrollPane pane = new JScrollPane();
-		JPanel fileSystemPanel = new FileSystemPanel();
-		pane.setViewportView(fileSystemPanel);
-		return pane;
 	}
 	
 	/**
@@ -98,5 +91,22 @@ public class FileSystemPlugin implements Plugin
 
 		return response;
 	}
+	
+	private void addFileSystemTab()
+	{
+		SparkTabbedPane pane = SparkManager.getWorkspace().getWorkspacePane();
+		System.out.println("INFO : Initialize File System Plugin UI");
+		pane.addTab("File System", new ImageIcon(getClass().getResource(
+				"images/sharing_file_system.png")), fileSystemPane());
+	}
+	
+	private JScrollPane fileSystemPane()
+	{
+		JScrollPane pane = new JScrollPane();
+		JPanel fileSystemPanel = new FileSystemPanel();
+		pane.setViewportView(fileSystemPanel);
+		return pane;
+	}
+
 
 }

@@ -1,4 +1,4 @@
-package edu.openfire.plugin;
+package edu.openfire.plugin.file;
 
 import org.dom4j.Element;
 import org.jivesoftware.openfire.IQHandlerInfo;
@@ -6,8 +6,6 @@ import org.jivesoftware.openfire.auth.UnauthorizedException;
 import org.jivesoftware.openfire.handler.IQHandler;
 import org.xmpp.packet.IQ;
 import org.xmpp.packet.PacketError;
-
-import edu.openfire.plugin.file.SocketFactory;
 
 public class ServerSocketIQHandler extends IQHandler {
 
@@ -17,8 +15,11 @@ public class ServerSocketIQHandler extends IQHandler {
 	
 	private IQHandlerInfo info;
 	
-	public ServerSocketIQHandler() {
+	private int port;
+	
+	public ServerSocketIQHandler(int port) {
 		super(MODULE_NAME);
+		this.port = port;
 		info = new IQHandlerInfo("socket", NAME_SPACE);
 	}
 
@@ -40,7 +41,7 @@ public class ServerSocketIQHandler extends IQHandler {
 			return reply;
 		}
 		
-		SocketFactory.createServerSocket(socketElement);
+		socketElement.addElement("port").addEntity("socket", "" + port);
 		reply.setChildElement(socketElement.createCopy());
 
 		System.out.println("created server socket: " + reply.toXML());
