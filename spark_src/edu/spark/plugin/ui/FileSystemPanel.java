@@ -56,9 +56,10 @@ public class FileSystemPanel extends JPanel {
 		fileContainer.setLayout(new GridBagLayout());
 		fileContainer.setBackground(Color.white);
 
-		FilePanel[] files = { new FilePanel("the_file_one.txt"),
-				new FilePanel("the_file_two.txt"),
-				new FilePanel("the_file_three.txt") };
+//		new FilePanel("the_file_one.txt"),
+//		new FilePanel("the_file_two.txt"),
+//		new FilePanel("the_file_three.txt") 
+		FilePanel[] files = { };
 
 		for (int i = 0; i < files.length; i++)
 			fileContainer.add(files[i], getGridBagConstraints(i, 0.0, 0.0, 0));
